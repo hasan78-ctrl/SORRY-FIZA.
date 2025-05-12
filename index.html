@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I'm Sorry, Fiza</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #fff0f5, #ffe4e1);
+      color: #333;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 3em;
+      color: #c71585;
+    }
+    p {
+      font-size: 1.5em;
+      margin: 10px 20px;
+    }
+    .poetry {
+      font-style: italic;
+      font-size: 1.2em;
+      margin-top: 20px;
+      color: #8b0000;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>I'm Sorry, Fiza</h1>
+  <p>You are beautiful, sweet, and kind. Please accept this bouquet as a small apology.</p>
+  <div class="poetry">
+    "ik husn-e-be-misāl kī tamsīl ke liye<br>
+    parchhā.iyoñ pe rang girātā rahā huuñ maiñ"
+  </div>
+
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const light = new THREE.HemisphereLight(0xffffff, 0x444444);
+    light.position.set(0, 20, 0);
+    scene.add(light);
+
+    const loader = new THREE.GLTFLoader();
+    loader.load('bouquet.glb', function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(40, 40, -30);
+      scene.add(model);
+    }, undefined, function(error) {
+      console.error(error);
+    });
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
